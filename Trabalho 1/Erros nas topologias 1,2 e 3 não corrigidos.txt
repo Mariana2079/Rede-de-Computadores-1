@@ -1,0 +1,3 @@
+Topologia 1 - 0,6 - não funciona o IPv6 entre as LANs, só intermente em cada LAN, faltou executar o comando IPv6 unicast-routing
+Topologia 2- 0,8 - não funciona o IPv6 entre as LANs, só intermente na LAN0, na LAN1 não foi definido os endereços IPv6 nos PCs.
+Topologia 3- 1,0 - não funciona o IPv6 entre as LANs, só intermente nas LANs.
