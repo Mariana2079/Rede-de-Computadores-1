@@ -1,0 +1,135 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+security passwords min-length 10
+!
+hostname r-fb-mz
+!
+login block-for 120 attempts 3 within 60
+!
+!
+enable secret 5 $1$mERr$Dm3Pw4odmLhpEh7YnmlL2.
+!
+!
+!
+!
+!
+!
+no ip cef
+ipv6 unicast-routing
+!
+no ipv6 cef
+!
+!
+!
+username mariana secret 5 $1$mERr$hDzomyKMcJxsf2F876sIS.
+!
+!
+license udi pid CISCO2811/K9 sn FTX1017AB6J-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain-name mariana.zatta.com.br
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description FILIAL 1
+ ip address 200.200.50.65 255.255.255.224
+ duplex auto
+ speed auto
+ ipv6 address FE80::1 link-local
+ ipv6 address 2001:DB8:ACAD:3201::1/64
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ description fb-ita
+ ip address 200.200.50.233 255.255.255.252
+ ipv6 address 2001:DB8:ACAD:32FF::2:1/112
+ clock rate 56000
+!
+interface Serial0/0/1
+ description fb-vit
+ ip address 200.200.50.230 255.255.255.252
+ ipv6 address 2001:DB8:ACAD:32FF::1:2/112
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 200.200.50.0 255.255.255.192 200.200.50.234 
+ip route 200.200.50.96 255.255.255.224 200.200.50.234 
+ip route 200.200.50.224 255.255.255.252 200.200.50.234 
+ip route 200.200.50.236 255.255.255.252 200.200.50.234 
+ip route 200.200.50.240 255.255.255.252 200.200.50.234 
+!
+ip flow-export version 9
+!
+ipv6 route 2001:DB8:ACAD:3202::/64 2001:DB8:ACAD:32FF::2:2
+ipv6 route 2001:DB8:ACAD:32FF::/112 2001:DB8:ACAD:32FF::2:2
+ipv6 route 2001:DB8:ACAD:32FF::3:0/112 2001:DB8:ACAD:32FF::2:2
+ipv6 route 2001:DB8:ACAD:32FF::4:0/112 2001:DB8:ACAD:32FF::2:2
+ipv6 route 2001:DB8:ACAD:3200::/64 2001:DB8:ACAD:32FF::2:2
+!
+ip access-list extended sl_def_acl
+ deny tcp any any eq telnet
+ deny tcp any any eq www
+ deny tcp any any eq 22
+ permit tcp any any eq 22
+!
+banner motd #---------------------------------------------------------------------------------
+|                                                                            |
+|                                   Roteador Francisco Beltro           |
+|                                                                          |
+|                        ATENO Acesso Restrito a pessoas autorizadas!             |
+|                                                                            |
+|            Administrador: MARIANA DA COSTA ZATTA (marianazatta@alunos.utfpr.edu.br)       |
+|                                                                          |
+---------------------------------------------------------------------------------------------
+#
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 5 0
+ password 7 08016F41070A481A13190505242A
+ login
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 5 0
+ password 7 08325F462937000305041E0F7B2523
+ login local
+line vty 5 15
+ exec-timeout 5 0
+ password 7 08325F462937000305041E0F7B2523
+ login local
+ transport input ssh
+!
+!
+!
+end
+
